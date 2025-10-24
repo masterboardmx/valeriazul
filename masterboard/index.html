@@ -220,6 +220,30 @@
     margin: 0 auto;
   }
 }
+        /* Zoom suave al pasar el mouse (fallback simple) */
+.product-image { overflow: hidden; border-radius: 12px; }
+.product-image img { display:block; transition: transform .2s ease; }
+.product-image:hover img { transform: scale(1.03); }
+
+/* Lupa circular */
+.product-image.magnify { position: relative; }
+.product-image .lens {
+  position: absolute;
+  width: 120px; height: 120px;          /* tamaño de la lupa */
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.9);
+  box-shadow: 0 4px 12px rgba(0,0,0,.25);
+  pointer-events: none;
+  background-repeat: no-repeat;
+  display: none;
+}
+.product-image.magnify:hover .lens { display: block; }
+
+/* En móvil / touch, desactivamos la lupa (solo queda el zoom suave) */
+@media (hover: none) and (pointer: coarse) {
+  .product-image .lens { display: none !important; }
+  .product-image:hover img { transform: none; }
+}
     </style>
 </head>
 <body>
@@ -568,5 +592,54 @@
             observer.observe(el);
         });
     </script>
+    <script>
+(function(){
+  // No activar lupa en dispositivos táctiles
+  const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+  document.querySelectorAll('.product-image').forEach(container => {
+    const img = container.querySelector('img');
+    if (!img) return;
+
+    // A la clase base le sumamos "magnify" para todas las imágenes
+    container.classList.add('magnify');
+
+    if (isTouch) return; // en touch no creamos la lupa
+
+    const lens = document.createElement('div');
+    lens.className = 'lens';
+    container.appendChild(lens);
+
+    const Z = 2.2; // nivel de zoom (ajústalo a gusto)
+    const zoomSrc = container.dataset.zoom || img.getAttribute('data-zoom') || img.src;
+
+    function move(e){
+      const rect = img.getBoundingClientRect();
+      let x = e.clientX - rect.left;
+      let y = e.clientY - rect.top;
+      // Limitar dentro de la imagen
+      x = Math.max(0, Math.min(x, rect.width));
+      y = Math.max(0, Math.min(y, rect.height));
+
+      const lw = lens.offsetWidth, lh = lens.offsetHeight;
+      lens.style.left = (x - lw/2) + 'px';
+      lens.style.top  = (y - lh/2) + 'px';
+
+      const bw = rect.width  * Z;
+      const bh = rect.height * Z;
+      const bx = -(x * Z - lw/2);
+      const by = -(y * Z - lh/2);
+
+      lens.style.backgroundImage    = `url("${zoomSrc}")`;
+      lens.style.backgroundSize     = `${bw}px ${bh}px`;
+      lens.style.backgroundPosition = `${bx}px ${by}px`;
+    }
+
+    container.addEventListener('mousemove', move);
+    container.addEventListener('mouseenter', () => lens.style.display = 'block');
+    container.addEventListener('mouseleave', () => lens.style.display = 'none');
+  });
+})();
+</script>
 </body>
 </html>
