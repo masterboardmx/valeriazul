@@ -152,6 +152,74 @@
 .product-card.horizontal .buy-button:hover {
   background: #e6f0ff;
 }
+        /* ===== Producto horizontal (solo cuando tenga la clase .horizontal) ===== */
+.products-grid .product-card.horizontal {
+  /* ocupa todo el ancho de la grilla: primera a última columna */
+  grid-column: 1 / -1;
+
+  /* layout lado a lado */
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  align-items: center;
+  gap: 24px;
+
+  /* look alargado */
+  background: linear-gradient(90deg, #1679F4 0%, #1E90FF 100%);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.12);
+  color: #fff; /* texto claro sobre fondo azul */
+}
+
+/* anula estilos del card normal que metían fondo/alto fijo en la imagen */
+.products-grid .product-card.horizontal .product-image {
+  background: none !important;
+  height: auto !important;
+  padding: 0 !important;
+  display: block;
+}
+
+/* imagen a la izquierda, tamaño fijo bonito */
+.products-grid .product-card.horizontal .product-image img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 12px;
+  display: block;
+}
+
+/* tipografía y colores sobre azul */
+.products-grid .product-card.horizontal .product-info h3,
+.products-grid .product-card.horizontal .product-info p,
+.products-grid .product-card.horizontal .product-price {
+  color: #fff;
+  margin-top: 0;
+}
+
+/* botón legible sobre azul */
+.products-grid .product-card.horizontal .buy-button {
+  background: #fff;
+  color: #1679F4;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.products-grid .product-card.horizontal .buy-button:hover {
+  background: #eaf2ff;
+}
+
+/* Responsive: en móvil apila imagen arriba y texto abajo */
+@media (max-width: 768px) {
+  .products-grid .product-card.horizontal {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .products-grid .product-card.horizontal .product-image img {
+    margin: 0 auto;
+  }
+}
     </style>
 </head>
 <body>
@@ -229,30 +297,26 @@
         <h2 class="section-title">Productos Destacados</h2>
         <p class="section-subtitle">Componentes de alta calidad para todas tus necesidades</p>
         <div class="products-grid">
+
 <div class="product-card horizontal">
   <div class="product-image">
-    <img src="images/TE_V98472L-B-R34.png" alt="Tarjeta Electrónica Inverter" width="300">
+    <img src="images/TE_V98472L-B-R34.png" alt="Tarjeta Electrónica Inverter">
   </div>
-
   <div class="product-info">
     <h3>Tarjeta Electrónica Inverter (V98472L-B-R34)</h3>
     <p class="product-subtitle">Compatible con modelos Mabe, Daewoo y GE.</p>
     <div class="product-price">$2000.00 MXN</div>
-
     <p class="product-description">
-        Tarjeta de potencia para aire acondicionado inverter compatible con modelos Mabe, Daewoo y GE.
+      Tarjeta de potencia para aire acondicionado inverter compatible con modelos Mabe, Daewoo y GE.
         Número de parte: V98472L-B-R34
         Tipo: Tarjeta unidad exterior (control de compresor y ventilador)
         Voltaje: 220 V / 60 Hz
         Capacidad: 24 000 BTU
         Tecnología: Inverter (alta eficiencia energética)
     </p>
-
-    <button class="buy-button" onclick="window.open('https://wa.me/526692711522?text=Hola, me interesa la Tarjeta Electrónica ', '_blank')">
-      Consultar Disponibilidad
-    </button>
+    <button class="buy-button" onclick="window.open('https://wa.me/526692711522?text=Hola, me interesa la Tarjeta Inverter Universal', '_blank')">Consultar Disponibilidad</button>
   </div>
-</div>
+</div>    
             <div class="product-card">
                 <div class="product-image">🔌</div>
                 <div class="product-info">
