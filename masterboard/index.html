@@ -229,7 +229,7 @@
 .product-image.magnify { position: relative; }
 .product-image .lens {
   position: absolute;
-  width: 120px; height: 120px;          /* tamaño de la lupa */
+  width: 128px; height: 180px;          /* tamaño de la lupa */
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,.9);
   box-shadow: 0 4px 12px rgba(0,0,0,.25);
@@ -610,7 +610,7 @@
     lens.className = 'lens';
     container.appendChild(lens);
 
-    const Z = 2.2; // nivel de zoom (ajústalo a gusto)
+    const Z = 3; // nivel de zoom (ajústalo a gusto)
     const zoomSrc = container.dataset.zoom || img.getAttribute('data-zoom') || img.src;
 
     function move(e){
